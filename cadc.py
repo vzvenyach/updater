@@ -4,6 +4,9 @@ import requests
 from lxml import html
 import datetime
 import os
+import dotenv
+PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
+dotenv.load_dotenv(os.path.join(PROJECT_PATH, ".env"))
 
 url = "http://www.cadc.uscourts.gov/internet/opinions.nsf/OpinionsShowDate?OpenAgent&scode=0"
 r = requests.get(url)
@@ -15,7 +18,7 @@ if content.text_content() == "No documents found":
 else:
 	payload = {
 		"token":os.environ.get("PUSHOVER_TOKEN"),
-		"user":os.environ.get("PUSHOVER_USER",
+		"user":os.environ.get("PUSHOVER_USER"),
 		"message":"New Opinions!",
 		"url": url
 	}
